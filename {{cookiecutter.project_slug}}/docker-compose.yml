@@ -15,16 +15,15 @@ services:
     ports:
       - 6379:6379
 
-  postgres:
-    image: postgres:12
-    restart: always
+  mongodb_container:
+    image: mongo:latest
     environment:
-      POSTGRES_USER: {{cookiecutter.postgres_user}}
-      POSTGRES_PASSWORD: {{cookiecutter.postgres_password}}
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
     ports:
-      - '5432:5432'
+      - 27017:27017
     volumes:
-      - db-data:/var/lib/postgresql/data:cached
+      - mongodb_data_container:/data/db
 
   worker:
     build:
@@ -51,9 +50,9 @@ services:
       - ./.docker/.ipython:/root/.ipython:cached
     environment:
       PYTHONPATH: .
-      DATABASE_URL: 'postgresql://{{cookiecutter.postgres_user}}:{{cookiecutter.postgres_password}}@postgres:5432/{{cookiecutter.postgres_user}}'
+      DATABASE_URL: 'mongodb://{{cookiecutter.mongodb_user}}:{{cookiecutter.mongodb_password}}@{{cookiecutter.host}}:27017/'
     depends_on:
-      - "postgres"
+      - "mongodb_container"
 
   frontend:
     build:
