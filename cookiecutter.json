@@ -1,11 +1,12 @@
 {
-  "project_slug": "fastapi-react-project",
+  "project_slug": "template_project",
   "project_name": "{{ cookiecutter.project_slug }}",
   "port": "8000",
-  "mongodb_user": "postgres",
+  "mongodb_user": "mongo",
   "mongodb_password": "password",
   "mongodb_database": "app",
   "mongodb_host":"10.10.10.20",
+  "mongodb_port":"27017",
   "superuser_email": "admin@{{cookiecutter.project_name}}.com",
   "superuser_password": "password",
   "secret_key": "super_secret"
